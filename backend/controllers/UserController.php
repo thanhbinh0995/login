@@ -5,17 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use yii\filters\AccessControl;
 use backend\components\BaseController;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * @inheritdoc
@@ -74,6 +72,8 @@ class UserController extends Controller
             $model->file->saveAs( 'uploads/user' .$imageName. '.' . $model->file->extension );
             $model->avatar = 'uploads/user' .$imageName.'.'. $model->file->extension;
 //            $model->created_at = date('Y-m-d H:i:s');
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
             $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

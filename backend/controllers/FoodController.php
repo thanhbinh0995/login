@@ -15,7 +15,7 @@ use backend\components\BaseController;
 /**
  * FoodController implements the CRUD actions for Food model.
  */
-class FoodController extends Controller
+class FoodController extends BaseController
 {
     /**
      * @inheritdoc

@@ -13,9 +13,10 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
- * @property string $auth_key
+ * @property string $password
  * @property string $password_hash
  * @property string $password_reset_token
+ * @property string $auth_key
  * @property string $email
  * @property string $avatar
  * @property integer $status
@@ -33,6 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_ADMIN = 1;
     const ROLE_USER = 2;
     public $file;
+    public $password;
     public static function tableName()
     {
         return 'user';
@@ -56,16 +58,18 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'email', 'avatar'], 'required'],
             [['role','status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['avatar'], 'string', 'max' => 50],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
+//            [['password_reset_token'], 'unique'],
             [['email'], 'email'],
             [['file'],'file','extensions' => 'png, jpg','maxSize' => 1024 * 1024],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_NOT_ACTIVE]],
+            ['password', 'required'],
+            ['password', 'string', 'min' => 6],
         ];
     }
 
@@ -77,9 +81,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
+            'password' => 'Passwrod',
+//            'auth_key' => 'Auth Key',
+//            'password_hash' => 'Password Hash',
+//            'password_reset_token' => 'Password Reset Token',
             'email' => 'Email',
 //            'avatar' => 'Avatar',
             'role' => 'Role',

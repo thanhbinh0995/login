@@ -13,7 +13,7 @@ use backend\components\BaseController;
 /**
  * PageController implements the CRUD actions for Page model.
  */
-class PageController extends Controller
+class PageController extends BaseController
 {
     /**
      * @inheritdoc

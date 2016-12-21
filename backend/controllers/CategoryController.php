@@ -14,7 +14,7 @@ use backend\components\BaseController;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     /**
      * @inheritdoc
