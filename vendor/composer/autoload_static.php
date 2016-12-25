@@ -38,6 +38,7 @@ class ComposerStaticInitae95c48d3c0bef576489fbca96fb54fa
         ),
         'l' => 
         array (
+            'lajax\\translatemanager\\' => 23,
             'lajax\\languagepicker\\' => 21,
         ),
         'k' => 
@@ -146,6 +147,10 @@ class ComposerStaticInitae95c48d3c0bef576489fbca96fb54fa
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'lajax\\translatemanager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lajax/yii2-translate-manager',
         ),
         'lajax\\languagepicker\\' => 
         array (

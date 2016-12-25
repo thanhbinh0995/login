@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "38a7144878c6e0b224070fb5b9d58aa8",
-    "content-hash": "9e3cf0b36c057390a6a1bb652dc3242b",
+    "hash": "d0d7a2710232c321fed66653a01c3e14",
+    "content-hash": "86d2381fb9212b39a904579b699a36a0",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -860,6 +860,51 @@
                 "yii2"
             ],
             "time": "2015-09-01 16:53:13"
+        },
+        {
+            "name": "lajax/yii2-translate-manager",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lajax/yii2-translate-manager.git",
+                "reference": "107d9dc345b79aa9fdaa31777b2d1b77d86b08f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lajax/yii2-translate-manager/zipball/107d9dc345b79aa9fdaa31777b2d1b77d86b08f5",
+                "reference": "107d9dc345b79aa9fdaa31777b2d1b77d86b08f5",
+                "shasum": ""
+            },
+            "require": {
+                "phpspec/php-diff": ">=1.0.2",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lajax\\translatemanager\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lajos Molnar",
+                    "email": "lajax.m@gmail.com"
+                }
+            ],
+            "description": "Online Translate",
+            "keywords": [
+                "extension",
+                "language",
+                "module",
+                "translate",
+                "yii2"
+            ],
+            "time": "2014-12-03 15:26:43"
         },
         {
             "name": "paragonie/random_compat",

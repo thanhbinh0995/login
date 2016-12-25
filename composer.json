@@ -22,7 +22,8 @@
         "yiidoc/yii2-redactor": "*",
         "dmstr/yii2-adminlte-asset": "2.*",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "lajax/yii2-language-picker": "1.*"
+        "lajax/yii2-language-picker": "1.*",
+        "lajax/yii2-translate-manager": "1.*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

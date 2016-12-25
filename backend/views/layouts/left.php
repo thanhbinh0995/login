@@ -33,7 +33,7 @@ use common\components\Util;
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    ['label' => 'Menu', 'options' => ['class' => 'header']],
+                    ['label' => Yii::t('app','Menu'), 'options' => ['class' => 'header']],
                     [
                         'label' => Yii::t('app', 'User'),
                         'icon' => 'glyphicon glyphicon-user',

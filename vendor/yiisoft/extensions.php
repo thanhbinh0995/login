@@ -111,4 +111,13 @@ return array (
       '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
     ),
   ),
+  'lajax/yii2-translate-manager' => 
+  array (
+    'name' => 'lajax/yii2-translate-manager',
+    'version' => '1.1.3.0',
+    'alias' => 
+    array (
+      '@lajax/translatemanager' => $vendorDir . '/lajax/yii2-translate-manager',
+    ),
+  ),
 );
