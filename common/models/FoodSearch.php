@@ -18,7 +18,7 @@ class FoodSearch extends Food
     public function rules()
     {
         return [
-            [['id', 'category_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'category_id', 'created_at', 'updated_at'], 'integer'],
             [['name', 'image', 'content'], 'safe'],
         ];
     }
@@ -44,7 +44,7 @@ class FoodSearch extends Food
         $query = Food::find();
 
         // add conditions that should always apply here
-        $query->joinWith('category');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -61,14 +61,12 @@ class FoodSearch extends Food
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,
-            'user_id' => $this->user_id,
-//            'created_at' => $this->created_at,
-//            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'food.name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'category.name', $this->category_id])
             ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;

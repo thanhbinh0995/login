@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use common\components\Util;
 /* @var $this yii\web\View */
 /* @var $model common\models\Food */
 
@@ -29,10 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'category_id',
-            'user_id',
+            [
+                'attribute'=>'category_id',
+                'value'=>  $model->category->name,
+            ],
             'name',
-            'image',
+            [
+                'attribute'=>'image',
+                'value'=>  Util::getUrlImage($model->image),
+                'format' => ['image',['width'=>'200','height'=>'200']],
+            ],
             'content:ntext',
             'created_at',
             'updated_at',

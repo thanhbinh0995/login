@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use common\components\Util;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
@@ -30,11 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-//            'auth_key',
-//            'password_hash',
-//            'password_reset_token',
             'email:email',
-            'avatar',
+             [
+                'attribute'=>'avatar',
+                'value'=>  Util::getUrlImage($model->avatar),
+                'format' => ['image',['width'=>'200','height'=>'200']],
+            ],
+//            'avatar',
             'status',
             'created_at',
             'updated_at',

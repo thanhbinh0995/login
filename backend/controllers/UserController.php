@@ -6,30 +6,15 @@ use Yii;
 use common\models\User;
 use common\models\UserSearch;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\components\BaseController;
+use common\components\Util;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
 class UserController extends BaseController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all User models.
      * @return mixed
@@ -67,15 +52,34 @@ class UserController extends BaseController
         $model = new User();
 
         if ($model->load(Yii::$app->request->post())) {
-            $imageName = $model->username;
-            $model->file = UploadedFile::getInstance($model, 'file');
-            $model->file->saveAs( 'uploads/user' .$imageName. '.' . $model->file->extension );
-            $model->avatar = 'uploads/user' .$imageName.'.'. $model->file->extension;
-//            $model->created_at = date('Y-m-d H:i:s');
+//            $model->file = UploadedFile::getInstance($model, 'file');
+//            $imageName = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
+//            
+//            $model->file->saveAs( 'uploads/' .$imageName. '.' . $model->file->extension );
+//            $model->avatar = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
+////            $model->avatar = 'uploads/' .$imageName.'.'. $model->file->extension;
+//            $model->setPassword($model->password);
+//            $model->generateAuthKey();
+//            $model->save(false);
+//            return $this->redirect(['view', 'id' => $model->id]);
+
+            
             $model->setPassword($model->password);
             $model->generateAuthKey();
-            $model->save(false);
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->file) {
+                $model->avatar = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
+            }
+            if ($model->save()) {
+                if (!empty($model->file)) {
+                    Util::uploadFile($model->file, $model->avatar);
+                }
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -92,9 +96,27 @@ class UserController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
+            $model->file = UploadedFile::getInstance($model, 'file');   
+            $old_image = "";
+            if ($model->file) {
+                $old_image = $model->avatar;
+                $model->avatar = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
+            }
+            if ($model->save()) {
+                if (!empty($model->file)) {
+                    Util::deleteFile($old_image);
+                    Util::uploadFile($model->file, $model->avatar);
+                }
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -130,4 +152,5 @@ class UserController extends BaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
 }

@@ -1,3 +1,6 @@
+<?php 
+use common\components\Util;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -5,10 +8,10 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="<?= Util::getUrlImage(Yii::$app->user->identity->avatar) ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p><?= Yii::$app->user->identity->username?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -70,48 +73,6 @@
                     ['label' => 'Login', 'icon' => 'fa  fa-sign-out', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                 ],
             ]
-//            [
-//                'options' => ['class' => 'sidebar-menu'],
-//                'items' => [
-//                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-//                    [
-//                        'label' => Yii::t('app', 'Category'),
-//                        'icon' => 'fa fa-map',
-//                        'url' => '#',
-//                        'items' => [
-//                             ['label' => Yii::t('app', 'List Category'), 'icon' => 'fa fa-circle-o', 'url' => ['/category'],],
-//                             ['label' => Yii::t('app', 'Create Category'), 'icon' => 'fa fa-circle-o', 'url' => ['/category/create'],],
-//                            ],
-//                    ],
-//                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-//                    [
-//                        'label' => 'Same tools',
-//                        'icon' => 'fa fa-share',
-//                        'url' => '#',
-//                        'items' => [
-//                            ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-//                            ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
-//                            [
-//                                'label' => 'Level One',
-//                                'icon' => 'fa fa-circle-o',
-//                                'url' => '#',
-//                                'items' => [
-//                                    ['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-//                                    [
-//                                        'label' => 'Level Two',
-//                                        'icon' => 'fa fa-circle-o',
-//                                        'url' => '#',
-//                                        'items' => [
-//                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-//                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-//                                        ],
-//                                    ],
-//                                ],
-//                            ],
-//                        ],
-//                    ],
-//                ],
-//            ]
         ) ?>
 
     </section>

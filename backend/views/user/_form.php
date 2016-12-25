@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\file\FileInput;
+use common\components\Util;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 /* @var $form yii\widgets\ActiveForm */
@@ -20,7 +21,19 @@ use yii\widgets\ActiveForm;
     
     <?= $form->field($model, 'role')->textInput() ?>
     
-    <?= $form->field($model, 'file')->fileInput() ?>
+    <?= $form->field($model, 'file')->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'allowedFileExtensions'=>['jpg', 'gif', 'png'],
+            'initialPreview'=>[
+                Html::img(Util::getUrlImage($model->file))
+            ],
+            'overwriteInitial'=>true,
+            'showUpload' => false,
+            'showCaption' => false,
+        ]
+    ]);
+    ?>
     
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

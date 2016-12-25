@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
+use common\models\Category;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\FoodSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,14 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
-               'attribute' => 'category_id',
-                'value' => 'category.name',
+                'attribute' => 'category_id',
+                'filter' => Category::listCategory(),
+                'value' => function ($model) {
+                    return $model->category->name;
+                },
             ],
-//            'category_id',
-//            'user_id',
-            
 //            'image',
-            // 'content:ntext',
+//            'content:ntext',
+            
             // 'created_at',
             // 'updated_at',
 

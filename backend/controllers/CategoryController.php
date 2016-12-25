@@ -1,36 +1,18 @@
 <?php
-
 namespace backend\controllers;
-
 use Yii;
 use common\models\Category;
 use common\models\CategorySearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use yii\filters\AccessControl;
 use backend\components\BaseController;
+use common\components\Util;
+
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
 class CategoryController extends BaseController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Category models.
      * @return mixed
@@ -67,31 +49,23 @@ class CategoryController extends BaseController
     {
         $model = new Category();
 
-        if ($model->load(Yii::$app->request->post())) {
-//            $imageName = $model->name;
-//            $model->imageCategory = UploadedFile::getInstance($model, 'imageCategory');
-//            $model->imageCategory->saveAs( 'uploads/category/' .$imageName. '.' . $model->imageCategory->extension );
-//            $model->image = 'uploads/category/' .$imageName.'.'. $model->imageCategory->extension;
-//            $model->save(false);
-//            return $this->redirect(['view', 'id' => $model->id]);
-            
-            
+        if($model->load(Yii::$app->request->post())){
             $model->imageCategory = UploadedFile::getInstance($model, 'imageCategory');            
             if ($model->imageCategory) {
-                $model->imageCategory = Yii::$app->security->generateRandomString() . '.' . $model->imageCategory->extension;
+                $model->image = Yii::$app->security->generateRandomString() . '.' . $model->imageCategory->extension;
             }
-            if ($model->save()) {
+            if ($model->save(false)) {
                 if (!empty($model->image)) {
                     Util::uploadFile($model->imageCategory, $model->image);
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
-                            'model' => $model,
+                    'model' => $model,
                 ]);
             }
-            
-        } else {
+        }
+        else{
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -108,9 +82,26 @@ class CategoryController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        if($model->load(Yii::$app->request->post())){
+            $model->imageCategory = UploadedFile::getInstance($model, 'imageCategory');   
+            $old_image = "";
+            if ($model->imageCategory) {
+                $old_image = $model->image;
+                $model->image = Yii::$app->security->generateRandomString() . '.' . $model->imageCategory->extension;
+            }
+            if ($model->save()) {
+                if (!empty($model->imageCategory)) {
+                    Util::deleteFile($old_image);
+                    Util::uploadFile($model->imageCategory, $model->image);
+                }
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        } 
+        else {
             return $this->render('update', [
                 'model' => $model,
             ]);

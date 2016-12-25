@@ -15,7 +15,6 @@ class m161202_170542_init_food_tbl extends Migration
         $this->createTable('{{%food}}', [
             'id' => $this->primaryKey(),
             'category_id' => $this->integer()->notNull(),
-            'user_id' => $this->integer()->notNull(),
             'name' => $this->string()->notNull(),
             'image' => $this->string(50)->notNull(),
             'content' => $this->text()->notNull(),

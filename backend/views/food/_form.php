@@ -2,10 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use common\models\Category;
-use common\models\User;
 use yii\redactor\widgets\Redactor;
+use common\models\Category;
+use kartik\file\FileInput;
+use common\components\Util;
+
 /* @var $this yii\web\View */
 /* @var $model common\models\Food */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,24 +14,37 @@ use yii\redactor\widgets\Redactor;
 
 <div class="food-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+    'options'=>['enctype'=>'multipart/form-data'] // important
+    ]); ?>   
 
-    <?= $form->field($model, 'category_id')->dropDownList(
-         ArrayHelper::map(Category::find()->all(),'id','name'),
-            ['prompt' => 'Select Category'] 
-     ) ?>
-    <?= $form->field($model, 'user_id')->dropDownList(
-         ArrayHelper::map(User::find()->all(),'id','username'),
-            ['prompt' => 'Select Username'] 
-     )?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     
-    <?= $form->field($model,'imageFood')->fileInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList(Category::listCategory()) ?>
 
-    <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className()) ?>
-    
+    <?= $form->field($model, 'file_image')->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'allowedFileExtensions'=>['jpg', 'gif', 'png'],
+            'initialPreview'=>[
+                Html::img(Util::getUrlImage($model->image))
+            ],
+            'overwriteInitial'=>true,
+            'showUpload' => false,
+            'showCaption' => false,
+        ]
+    ]);
+    ?>
+
+    <?= $form->field($model, 'content')->widget(Redactor::className(), [
+        'clientOptions' => [
+            'minHeight'=> 200, // pixels
+        ]
+    ]) ?>
+
+
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -6,6 +6,8 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\helpers\ArrayHelper;
+//use cornernote\softdelete\SoftDeleteBehavior;
 /**
  * This is the model class for table "category".
  *
@@ -68,5 +70,8 @@ class Category extends ActiveRecord
     public function getFoods()
     {
         return $this->hasMany(Food::className(), ['category_id' => 'id']);
+    }
+    public static function listCategory(){
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }
 }

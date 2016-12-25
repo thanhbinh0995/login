@@ -5,33 +5,16 @@ namespace backend\controllers;
 use Yii;
 use common\models\Food;
 use common\models\FoodSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
-use yii\filters\AccessControl;
-use common\models\User;
-use common\components\Util;
 use backend\components\BaseController;
+use common\components\Util;
+use yii\web\UploadedFile;
+
 /**
  * FoodController implements the CRUD actions for Food model.
  */
 class FoodController extends BaseController
 {
-    /**
-     * @inheritdoc
-     */
-//    public function behaviors()
-//    {
-//        return [
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'delete' => ['POST'],
-//                ],
-//            ],
-//        ];
-//    }
-
     /**
      * Lists all Food models.
      * @return mixed
@@ -67,9 +50,7 @@ class FoodController extends BaseController
     public function actionCreate()
     {
         $model = new Food();
-        $user = new User();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->user_id = Yii::$app->user->id;
+        if($model->load(Yii::$app->request->post())){
             $model->file_image = UploadedFile::getInstance($model, 'file_image');
             if ($model->file_image) {
                 $model->image = Yii::$app->security->generateRandomString() . '.' . $model->file_image->extension;
@@ -84,17 +65,10 @@ class FoodController extends BaseController
                     'model' => $model,
                 ]);
             }
-            
-            
-//            $imageName = $model->name;
-//            $model->imageFood = UploadedFile::getInstance($model, 'imageFood');
-//            $model->imageFood->saveAs( 'uploads/food/' .$imageName. '.' . $model->imageFood->extension );
-//            $model->image = 'uploads/food/' .$imageName.'.'. $model->imageFood->extension;
-//            $model->save(false);
-//            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else{
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -128,7 +102,7 @@ class FoodController extends BaseController
                 ]);
             }
         }
-        else {
+        else{
             return $this->render('create', [
                 'model' => $model,
             ]);

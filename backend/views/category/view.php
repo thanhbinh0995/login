@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use common\components\Util;
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
 
@@ -30,7 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'image',
+//            'image',
+            [
+                'attribute'=>'image',
+                'value'=>  Util::getUrlImage($model->image),
+                'format' => ['image',['width'=>'200','height'=>'200']],
+            ],
             'created_at',
             'updated_at',
         ],

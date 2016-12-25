@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use common\models\User;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,8 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-             'email:email',
-            'role',
+            'email:email',
+            [
+                'attribute' => 'role',
+                'filter' => User::listRole(),
+//                'value' => ,
+                
+                'value' => function($array) {
+                    return User::listRole()[$array->role];
+                },
+            ],
+//            'role',
             // 'avatar',
             // 'status',
             // 'created_at',

@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "user".
  *
@@ -65,7 +65,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['email'], 'unique'],
 //            [['password_reset_token'], 'unique'],
             [['email'], 'email'],
-            [['file'],'file','extensions' => 'png, jpg','maxSize' => 1024 * 1024],
+            [['file'],'file','extensions' => 'png, jpg','maxSize' => 1024 * 1024*2],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_NOT_ACTIVE]],
             ['password', 'required'],
@@ -219,5 +219,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null): IdentityInterface {
         
     }
-
+    public static function listRole(){
+        $array = [
+            1 => 'admin',
+            2 => 'user',
+        ];
+        return $array;
+    }
 }

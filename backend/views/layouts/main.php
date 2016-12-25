@@ -1,10 +1,10 @@
 <?php
 use yii\helpers\Html;
-
+use common\models\User;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
+$user = new User();
 if (Yii::$app->controller->action->id === 'login') { 
 /**
  * Do not use this code in your template. Remove it. 
