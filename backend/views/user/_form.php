@@ -16,6 +16,8 @@ use common\components\Util;
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'password')->passwordInput() ?>
+    
+    <?= $form->field($model, 'password')->passwordInput() ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
