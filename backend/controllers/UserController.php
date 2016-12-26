@@ -50,22 +50,8 @@ class UserController extends BaseController
     public function actionCreate()
     {
         $model = new User();
-
+        $model->scenario = 'create';
         if ($model->load(Yii::$app->request->post())) {
-//            $model->file = UploadedFile::getInstance($model, 'file');
-//            $imageName = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
-//            
-//            $model->file->saveAs( 'uploads/' .$imageName. '.' . $model->file->extension );
-//            $model->avatar = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
-////            $model->avatar = 'uploads/' .$imageName.'.'. $model->file->extension;
-//            $model->setPassword($model->password);
-//            $model->generateAuthKey();
-//            $model->save(false);
-//            return $this->redirect(['view', 'id' => $model->id]);
-
-            
-            $model->setPassword($model->password);
-            $model->generateAuthKey();
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file) {
                 $model->avatar = Yii::$app->security->generateRandomString() . '.' . $model->file->extension;
@@ -98,8 +84,6 @@ class UserController extends BaseController
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->password);
-            $model->generateAuthKey();
             $model->file = UploadedFile::getInstance($model, 'file');   
             $old_image = "";
             if ($model->file) {

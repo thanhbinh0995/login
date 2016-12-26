@@ -38,7 +38,6 @@ use common\components\Util;
                         <li class="user-header">
                             <img src="<?= Util::getUrlImage(Yii::$app->user->identity->avatar) ?>" class="img-circle"
                                  alt="User Image"/>
-
                             <p>
                                 <?= Yii::$app->user->identity->username ?> - Web Developer
                                 <small>Member since Nov. 2012</small>

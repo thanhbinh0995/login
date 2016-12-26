@@ -17,7 +17,7 @@ use common\components\Util;
     
     <?= $form->field($model, 'password')->passwordInput() ?>
     
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput() ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
@@ -28,7 +28,7 @@ use common\components\Util;
         'pluginOptions' => [
             'allowedFileExtensions'=>['jpg', 'gif', 'png'],
             'initialPreview'=>[
-                Html::img(Util::getUrlImage($model->file))
+                Html::img(Util::getUrlImage($model->avatar))
             ],
             'overwriteInitial'=>true,
             'showUpload' => false,

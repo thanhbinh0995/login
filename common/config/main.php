@@ -1,7 +1,7 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'language' => 'ja',
+    'language' => 'vi',
     'bootstrap' => ['languagepicker'],
     'components' => [
         'cache' => [
@@ -27,6 +27,12 @@ return [
                         'basePath' => '@approot/messages',
                     ]
                 ]
+        ],
+        'urlManagerBackend' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '/login/backend/web',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
         ],
     ],
     'modules' => [

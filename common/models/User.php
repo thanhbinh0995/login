@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $id
  * @property string $username
  * @property string $password
+ * @property string $repassword
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $auth_key
@@ -35,6 +36,7 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_USER = 2;
     public $file;
     public $password;
+    public $password_repeat;
     public static function tableName()
     {
         return 'user';
@@ -61,15 +63,14 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['avatar'], 'string', 'max' => 50],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
-//            [['password_reset_token'], 'unique'],
+            [['username', 'email'], 'unique'],
             [['email'], 'email'],
             [['file'],'file','extensions' => 'png, jpg','maxSize' => 1024 * 1024*2],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_NOT_ACTIVE]],
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['password','password_repeat'], 'required','on'=>'create'],
+            [['password', 'password_repeat'], 'string', 'min' => 6,'on'=>'create'],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -80,19 +81,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'password' => 'Passwrod',
-//            'auth_key' => 'Auth Key',
-//            'password_hash' => 'Password Hash',
-//            'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-//            'avatar' => 'Avatar',
-            'role' => 'Role',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'file' => 'Avatar',
-            'role' => 'IsAdmin',
+            'username' => Yii::t('app','Username'),
+            'password' => Yii::t('app','Password'),
+            'password_repeat' => Yii::t('app','Password Repeat'),
+            'email' => Yii::t('app','Email'),
+            'status' => Yii::t('app','Status'),
+            'created_at' => Yii::t('app','Created At'),
+            'updated_at' => Yii::t('app','Updated At'),
+            'file' => Yii::t('app','Avatar'),
+            'role' => Yii::t('app','IsAdmin'),
         ];
     }
     public static function findIdentity($id)

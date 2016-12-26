@@ -17,12 +17,12 @@ class Util {
     public static function getUrlImage($image) {
         $link;
         if($image){
-           $link = 'uploads/'.$image;
-//           $link = Yii::$app->urlManagerApi->createUrl('/uploads') . '/' . $image;
+//           $link = 'uploads/'.$image;
+           $link = Yii::$app->urlManagerBackend->createUrl('/uploads') . '/' . $image;
         }
         else {
-            $link = 'uploads/'. 'no-image.jpg';
-//            $link = Yii::$app->urlManagerApi->createUrl('/uploads') . '/' .'no-image.jpg';
+//            $link = 'uploads/'. 'no-image.jpg';
+            $link = Yii::$app->urlManagerBackend->createUrl('/uploads') . '/' .'no-image.jpg';
         }
         return $link;
     }
